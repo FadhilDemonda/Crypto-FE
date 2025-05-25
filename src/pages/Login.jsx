@@ -62,6 +62,7 @@ export default function Login() {
             Daftar di sini
           </Link>
         </div>
+        
       </Card.Body>
     </Card>
   );
