@@ -12,7 +12,7 @@ export default function PrivateRoute({ children }) {
 
   if (!user) {
     // Kalau tidak login, redirect ke halaman login
-    return <Navigate to="/login" replace />;
+    return <Navigate to="/about" replace />;
   }
 
   // Kalau sudah login, render children (halaman dashboard, dll)

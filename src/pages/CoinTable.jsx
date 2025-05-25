@@ -15,36 +15,36 @@ function PriceChange({ value }) {
 }
 
 // Grafik mini garis sederhana
-function MiniChart({ data }) {
-  if (!data || !Array.isArray(data) || data.length === 0) return null;
+// function MiniChart({ data }) {
+//   if (!data || !Array.isArray(data) || data.length === 0) return null;
 
-  const max = Math.max(...data);
-  const min = Math.min(...data);
-  const range = max - min || 1;
-  const points = data
-    .map((d, i) => {
-      const x = (i / (data.length - 1)) * 100;
-      const y = 100 - ((d - min) / range) * 100;
-      return `${x},${y}`;
-    })
-    .join(" ");
+//   const max = Math.max(...data);
+//   const min = Math.min(...data);
+//   const range = max - min || 1;
+//   const points = data
+//     .map((d, i) => {
+//       const x = (i / (data.length - 1)) * 100;
+//       const y = 100 - ((d - min) / range) * 100;
+//       return `${x},${y}`;
+//     })
+//     .join(" ");
 
-  return (
-    <svg
-      width="100"
-      height="30"
-      viewBox="0 0 100 100"
-      preserveAspectRatio="none"
-    >
-      <polyline
-        fill="none"
-        stroke={data[data.length - 1] >= data[0] ? "green" : "red"}
-        strokeWidth="3"
-        points={points}
-      />
-    </svg>
-  );
-}
+//   return (
+//     <svg
+//       width="100"
+//       height="30"
+//       viewBox="0 0 100 100"
+//       preserveAspectRatio="none"
+//     >
+//       <polyline
+//         fill="none"
+//         stroke={data[data.length - 1] >= data[0] ? "green" : "red"}
+//         strokeWidth="3"
+//         points={points}
+//       />
+//     </svg>
+//   );
+// }
 
 export default function CoinTable({ coins }) {
   if (!coins || coins.length === 0) {
@@ -64,7 +64,6 @@ export default function CoinTable({ coins }) {
           <th>7d</th>
           <th>24h Volume</th>
           <th>Market Cap</th>
-          <th>Last 7 Days</th>
         </tr>
       </thead>
       <tbody>
@@ -94,9 +93,6 @@ export default function CoinTable({ coins }) {
             <td><PriceChange value={coin.price_change_percentage_7d_in_currency} /></td>
             <td>${coin.total_volume.toLocaleString()}</td>
             <td>${coin.market_cap.toLocaleString()}</td>
-            <td>
-              <MiniChart data={coin.sparkline_in_7d?.price || []} />
-            </td>
           </tr>
         ))}
       </tbody>

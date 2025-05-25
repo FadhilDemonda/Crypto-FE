@@ -4,9 +4,9 @@ import { Link } from "react-router-dom";
 
 export default function Navigation({ isLoggedIn, user, onLogout }) {
   return (
-    <Navbar bg="dark" variant="dark" expand="lg" className="mb-4">
+    <Navbar bg="dark" variant="dark" expand="lg" className="mb-0">
       <Container>
-        <Navbar.Brand as={Link} to="/dashboard">
+        <Navbar.Brand as={Link} to="/about">
           Crypto Tracker
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />

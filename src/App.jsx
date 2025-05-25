@@ -11,6 +11,8 @@ import CoinList from './pages/CoinList1';
 import CoinDetail from './pages/CoinDetail';
 import CoinHistory from './pages/CoinHistory';
 import TransactionHistory from "./pages/TransactionHistory";
+import About from "./pages/About";
+
 
 import AppNavbar from './components/Navbar';
 
@@ -20,6 +22,7 @@ export default function App() {
   const { user, logout } = useAuth();  // ambil user dan fungsi logout dari context
 
   return (
+    
     <>
       {/* Pass status login dan user ke navbar */}
       <AppNavbar 
@@ -29,27 +32,78 @@ export default function App() {
       />
 
       <Routes>
-        <Route path="/" element={<Navigate to="/login" replace />} />
+        <Route path="/" element={<Navigate to="/about" replace />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/profile" element={<Profile />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/coins" element={<CoinList />} />
+
+        {/* <Route path="/profile" element={<Profile />} />
         <Route path="/balance" element={<Balance />} />
         <Route path="/portfolio" element={<Portfolio />} />
         <Route path="/transactions/buy" element={<Transactions />} />
         <Route path="/transactions" element={<TransactionHistory />} />
 
-        <Route path="/coins" element={<CoinList />} />
         <Route path="/coins/:coin_name" element={<CoinDetail />} />
-        <Route path="/coins/:coin_name/history" element={<CoinHistory />} />
+        <Route path="/coins/:coin_name/history" element={<CoinHistory />} /> */}
 
-        <Route
-          path="/dashboard"
-          element={
-            <PrivateRoute>
-              <Dashboard />
-            </PrivateRoute>
-          }
-        />
+  {/* Hanya gunakan versi PrivateRoute saja untuk routes ini */}
+  <Route
+    path="/portfolio"
+    element={
+      <PrivateRoute>
+        <Portfolio />
+      </PrivateRoute>
+    }
+  />
+  <Route
+    path="/transactions/buy"
+    element={
+      <PrivateRoute>
+        <Transactions />
+      </PrivateRoute>
+    }
+  />
+  <Route
+    path="/profile"
+    element={
+      <PrivateRoute>
+        <Profile />
+      </PrivateRoute>
+    }
+  />
+  <Route
+    path="/transactions"
+    element={
+      <PrivateRoute>
+        <TransactionHistory />
+      </PrivateRoute>
+    }
+  />
+  <Route
+    path="/coins/:coin_name"
+    element={
+      <PrivateRoute>
+        <CoinDetail />
+      </PrivateRoute>
+    }
+  />
+  <Route
+    path="/coins/:coin_name/history"
+    element={
+      <PrivateRoute>
+        <CoinHistory />
+      </PrivateRoute>
+    }
+  />
+  <Route
+    path="/dashboard"
+    element={
+      <PrivateRoute>
+        <Dashboard />
+      </PrivateRoute>
+    }
+  />
       </Routes>
     </>
   );
