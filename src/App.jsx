@@ -11,6 +11,7 @@ import CoinList from './pages/CoinList1';
 import CoinDetail from './pages/CoinDetail';
 import CoinHistory from './pages/CoinHistory';
 import TransactionHistory from "./pages/TransactionHistory";
+import TopUp from "./pages/TopUp";
 import About from "./pages/About";
 
 
@@ -56,6 +57,14 @@ export default function App() {
       </PrivateRoute>
     }
   />
+<Route
+  path="/topup"
+  element={
+    <PrivateRoute>
+      <TopUp />
+    </PrivateRoute>
+  }
+/>
   <Route
     path="/transactions/buy"
     element={

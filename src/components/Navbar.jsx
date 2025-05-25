@@ -32,6 +32,9 @@ export default function Navigation({ isLoggedIn, user, onLogout }) {
                 <NavDropdown.Item as={Link} to="/profile">
                   Profile
                 </NavDropdown.Item>
+                <NavDropdown.Item as={Link} to="/topup">
+                  Topup Saldo
+                </NavDropdown.Item>
                 <NavDropdown.Divider />
                 <NavDropdown.Item onClick={onLogout}>Logout</NavDropdown.Item>
               </NavDropdown>

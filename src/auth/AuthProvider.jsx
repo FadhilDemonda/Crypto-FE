@@ -46,8 +46,24 @@ export const AuthProvider = ({ children }) => {
     return res;
   };
 
+  //refresh user
+  const refreshUser = async () => {
+    try {
+      const response = await axiosInstance.get("/users/me");
+      setUser(response.data);
+      return response.data;
+    } catch {
+      setUser(null);
+      return null;
+    }
+  };
+
+  useEffect(() => {
+    refreshUser();
+  }, []);
+
   return (
-    <AuthContext.Provider value={{ user, loading, login, logout, register }}>
+    <AuthContext.Provider value={{ user, loading, login, logout, register, setUser, refreshUser }}>
       {children}
     </AuthContext.Provider>
   );
