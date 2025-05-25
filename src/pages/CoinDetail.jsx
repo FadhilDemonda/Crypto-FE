@@ -28,7 +28,7 @@ export default function CoinDetail() {
   const [error, setError] = useState("");
   const [balance, setBalance] = useState(null);
   const [processing, setProcessing] = useState(false);
-  const [userCoins, setUserCoins] = useState(null);
+  const [portfolio, setPortfolio] = useState([]);
 
   useEffect(() => {
     async function fetchData() {
@@ -41,10 +41,13 @@ export default function CoinDetail() {
         console.log('Coin data response:', resCoin.data);
         setCoin(resCoin.data);
 
-        // Fetch user balance and coins
-        const resUser = await axiosInstance.get('/users/me');
+        // Fetch user balance and portfolio
+        const [resUser, resPortfolio] = await Promise.all([
+          axiosInstance.get('/users/me'),
+          axiosInstance.get('/portfolio')
+        ]);
         setBalance(resUser.data.balance);
-        setUserCoins(resUser.data.coins);
+        setPortfolio(resPortfolio.data);
       } catch (err) {
         console.error('Error fetching data:', err);
         setError("Gagal memuat data");
@@ -82,7 +85,8 @@ export default function CoinDetail() {
       setInputError("Masukkan jumlah koin valid lebih besar dari 0");
       return;
     }
-    const userCoinAmount = userCoins?.[coin_name] || 0;
+    const userCoin = portfolio.find(p => p.coin_name === coin_name);
+    const userCoinAmount = userCoin ? Number(userCoin.total_coin) : 0;
     if (num > userCoinAmount) {
       setInputError("Jumlah koin tidak cukup");
       return;
@@ -217,7 +221,9 @@ export default function CoinDetail() {
                   </tr>
                   <tr>
                     <td>Koin yang dimiliki</td>
-                    <td>{userCoins?.[coin_name]?.toFixed(8) || "0.00000000"} {coin.symbol.toUpperCase()}</td>
+                    <td>
+                      {portfolio.find(p => p.coin_name === coin_name)?.total_coin || "0.00000000"} {coin.symbol.toUpperCase()}
+                    </td>
                   </tr>
                 </tbody>
               </Table>
