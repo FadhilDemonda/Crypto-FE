@@ -64,6 +64,7 @@ export default function CoinTable({ coins }) {
           <th>7d</th>
           <th>24h Volume</th>
           <th>Market Cap</th>
+          {/* <th>Last 7 Days</th> */}
         </tr>
       </thead>
       <tbody>
@@ -93,6 +94,9 @@ export default function CoinTable({ coins }) {
             <td><PriceChange value={coin.price_change_percentage_7d_in_currency} /></td>
             <td>${coin.total_volume.toLocaleString()}</td>
             <td>${coin.market_cap.toLocaleString()}</td>
+            {/* <td>
+              <MiniChart data={coin.sparkline_in_7d?.price || []} />
+            </td> */}
           </tr>
         ))}
       </tbody>

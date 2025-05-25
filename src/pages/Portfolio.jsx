@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axiosInstance from "../api/axiosInstance";
+import { Link } from "react-router-dom";
+
 import {
   Container,
   Row,
@@ -8,6 +10,7 @@ import {
   Spinner,
   Alert,
   Badge,
+  Button,
 } from "react-bootstrap";
 
 import {
@@ -208,6 +211,17 @@ export default function Portfolio() {
                       : "-"}
                   </Badge>
                 </div>
+                <div className="mt-2">
+                <Button
+                    as={Link}
+                    to={`/coins/${p.coin_name}`}
+                    variant="danger"
+                    className="text-truncate"
+                    style={{ maxWidth: "100%" }}
+                  >
+                      Lihat Detail
+                  </Button>
+                      </div>
               </Card.Body>
             </Card>
           </Col>
