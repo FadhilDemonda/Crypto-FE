@@ -1,5 +1,5 @@
-import React from "react";
-import { Card, ListGroup, Badge } from "react-bootstrap";
+import React, { useState } from "react";
+import { Card, ListGroup, Badge, Modal, Button } from "react-bootstrap";
 
 const dummyNews = [
   {
@@ -40,24 +40,71 @@ const dummyNews = [
 ];
 
 export default function NewsSection() {
+  const [showModal, setShowModal] = useState(false);
+  const [selectedNews, setSelectedNews] = useState(null);
+
+  const handleClick = (news) => {
+    setSelectedNews(news);
+    setShowModal(true);
+  };
+
+  const handleClose = () => {
+    setShowModal(false);
+    setSelectedNews(null);
+  };
+
   return (
-    <Card className="mt-4 shadow-sm">
-      <Card.Header>
-        <h5>Berita Crypto Terbaru</h5>
-      </Card.Header>
-      <ListGroup variant="flush">
-        {dummyNews.map((news) => (
-          <ListGroup.Item key={news.id}>
-            <a href={news.url} target="_blank" rel="noopener noreferrer" className="fw-semibold">
-              {news.title}
-            </a>
-            <div className="d-flex justify-content-between mt-1">
-              <small className="text-muted">{new Date(news.date).toLocaleDateString()}</small>
-              <Badge bg="info">{news.category}</Badge>
-            </div>
-          </ListGroup.Item>
-        ))}
-      </ListGroup>
-    </Card>
+    <>
+      <Card className="mt-4 shadow-sm">
+        <Card.Header>
+          <h5>Berita Crypto Terbaru</h5>
+        </Card.Header>
+        <ListGroup variant="flush" className="p-2">
+          {dummyNews.map((news) => (
+            <ListGroup.Item
+              key={news.id}
+              action
+              onClick={() => handleClick(news)}
+              className="d-flex flex-column"
+              style={{ cursor: "pointer" }}
+            >
+              <div
+                className="fw-semibold mb-1"
+                style={{ color: "#0d6efd" /* bootstrap primary color */ }}
+              >
+                {news.title}
+              </div>
+              <div className="d-flex justify-content-between align-items-center text-muted small">
+                <span>{new Date(news.date).toLocaleDateString()}</span>
+                <Badge bg="info" pill>
+                  {news.category}
+                </Badge>
+              </div>
+            </ListGroup.Item>
+          ))}
+        </ListGroup>
+      </Card>
+
+      <Modal show={showModal} onHide={handleClose} centered>
+        <Modal.Header closeButton>
+          <Modal.Title>{selectedNews?.title || "Berita Crypto"}</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <p>
+            Ini cuma dummy bang, berita <strong>{selectedNews?.title}</strong>{" "}
+            belum ada detail lengkapnya.
+          </p>
+          <p>
+            Tanggal: {selectedNews ? new Date(selectedNews.date).toLocaleDateString() : ""}
+          </p>
+          <p>Kategori: {selectedNews?.category}</p>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Tutup
+          </Button>
+        </Modal.Footer>
+      </Modal>
+    </>
   );
 }
