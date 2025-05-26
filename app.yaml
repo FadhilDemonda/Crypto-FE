@@ -6,12 +6,18 @@ handlers:
   - url: /assets
     static_dir: dist/assets
 
+  - url: /favicon.ico
+    static_files: dist/favicon.ico
+    upload: dist/favicon.ico
+
   - url: /
     static_files: dist/index.html
     upload: dist/index.html
+    secure: always
 
   - url: /(.*)
-    static_files: dist/\1
-    upload: dist/(.*)
+    static_files: dist/index.html
+    upload: dist/index.html
+    secure: always
 
 default_expiration: "1h"
