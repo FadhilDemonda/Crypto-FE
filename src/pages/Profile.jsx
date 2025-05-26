@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Container,
   Card,
@@ -56,6 +56,8 @@ export default function Profile() {
         email: profile.email,
       });
       setMessage({ type: "success", text: "Profil berhasil diperbarui" });
+      window.location.reload();
+
     } catch (err) {
       setMessage({
         type: "danger",
@@ -111,53 +113,85 @@ export default function Profile() {
 
   return (
     <Container className="my-5 d-flex justify-content-center">
-      <Card style={{ maxWidth: 520, width: "100%" }} className="p-4 shadow">
-        <h3 className="mb-4 text-center">Profil Saya</h3>
+      <Card
+        style={{ maxWidth: 520, width: "100%", borderRadius: "16px", boxShadow: "0 4px 20px rgba(0,0,0,0.1)" }}
+        className="p-4"
+      >
+        <h3 className="mb-4 text-center" style={{ fontWeight: "700", color: "#222" }}>
+          Profil Saya
+        </h3>
 
-        {message.text && <Alert variant={message.type}>{message.text}</Alert>}
+        {message.text && (
+          <Alert variant={message.type} style={{ fontWeight: "600" }}>
+            {message.text}
+          </Alert>
+        )}
 
         <Form onSubmit={handleSubmit}>
-          <Form.Group className="mb-3" controlId="username">
-            <Form.Label>Username</Form.Label>
+          <Form.Group className="mb-4" controlId="username">
+            <Form.Label style={{ fontWeight: "600" }}>Username</Form.Label>
             <Form.Control
               type="text"
               value={profile.username}
               onChange={(e) => handleChange("username", e.target.value)}
               required
               minLength={3}
+              style={{
+                border: "none",
+                borderBottom: "2px solid #0d6efd",
+                borderRadius: 0,
+                boxShadow: "none",
+                fontSize: "1.1rem",
+                paddingLeft: 0,
+              }}
             />
           </Form.Group>
 
-          <Form.Group className="mb-3" controlId="email">
-            <Form.Label>Email</Form.Label>
+          <Form.Group className="mb-4" controlId="email">
+            <Form.Label style={{ fontWeight: "600" }}>Email</Form.Label>
             <Form.Control
               type="email"
               value={profile.email}
               onChange={(e) => handleChange("email", e.target.value)}
               required
+              style={{
+                border: "none",
+                borderBottom: "2px solid #0d6efd",
+                borderRadius: 0,
+                boxShadow: "none",
+                fontSize: "1.1rem",
+                paddingLeft: 0,
+              }}
             />
           </Form.Group>
 
-          <Form.Group className="mb-4" controlId="balance">
-            <Form.Label>Saldo</Form.Label>
+          <Form.Group className="mb-5" controlId="balance">
+            <Form.Label style={{ fontWeight: "600" }}>Saldo</Form.Label>
             <Form.Control
               type="text"
               readOnly
               plaintext
               value={`$${parseFloat(profile.balance).toFixed(2)}`}
+              style={{ fontSize: "1.25rem", fontWeight: "700", color: "#198754" }}
             />
           </Form.Group>
 
-          <div className="d-flex justify-content-between">
-            <Button variant="secondary" onClick={() => navigate("/dashboard")}>
+          <div className="d-flex justify-content-between align-items-center flex-wrap gap-2">
+            <Button
+              variant="secondary"
+              onClick={() => navigate("/dashboard")}
+              style={{ minWidth: "100px", fontWeight: "600" }}
+            >
               Kembali
             </Button>
 
-            <div>
+            <div className="d-flex gap-2 flex-wrap">
               <Button
                 variant="warning"
-                className="me-2"
                 onClick={() => setShowChangePassword(true)}
+                disabled
+                style={{ minWidth: "140px", fontWeight: "600", opacity: 0.6 }}
+                title="Fitur ubah password sedang dinonaktifkan"
               >
                 Ubah Password
               </Button>
@@ -166,12 +200,18 @@ export default function Profile() {
                 <Button
                   variant="danger"
                   onClick={() => setShowConfirmDelete(true)}
+                  style={{ minWidth: "140px", fontWeight: "600" }}
                 >
                   Hapus Akun
                 </Button>
               )}
 
-              <Button variant="primary" type="submit" className="ms-2">
+              <Button
+                variant="primary"
+                type="submit"
+                className="ms-2"
+                style={{ minWidth: "140px", fontWeight: "600" }}
+              >
                 Simpan Perubahan
               </Button>
             </div>
@@ -184,19 +224,28 @@ export default function Profile() {
         show={showConfirmDelete}
         onHide={() => setShowConfirmDelete(false)}
         centered
+        style={{ borderRadius: "16px" }}
       >
         <Modal.Header closeButton>
-          <Modal.Title>Konfirmasi Hapus Akun</Modal.Title>
+          <Modal.Title style={{ fontWeight: "700" }}>Konfirmasi Hapus Akun</Modal.Title>
         </Modal.Header>
-        <Modal.Body>
+        <Modal.Body style={{ fontSize: "1.1rem" }}>
           Apakah kamu yakin ingin menghapus akun ini? Tindakan ini tidak dapat
           dibatalkan.
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={() => setShowConfirmDelete(false)}>
+          <Button
+            variant="secondary"
+            onClick={() => setShowConfirmDelete(false)}
+            style={{ fontWeight: "600" }}
+          >
             Batal
           </Button>
-          <Button variant="danger" onClick={handleDeleteAccount}>
+          <Button
+            variant="danger"
+            onClick={handleDeleteAccount}
+            style={{ fontWeight: "600" }}
+          >
             Hapus Akun
           </Button>
         </Modal.Footer>
@@ -207,43 +256,68 @@ export default function Profile() {
         show={showChangePassword}
         onHide={() => setShowChangePassword(false)}
         centered
+        style={{ borderRadius: "16px" }}
       >
         <Modal.Header closeButton>
-          <Modal.Title>Ubah Password</Modal.Title>
+          <Modal.Title style={{ fontWeight: "700" }}>Ubah Password</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           {passwordError && <Alert variant="danger">{passwordError}</Alert>}
           <Form onSubmit={handleChangePasswordSubmit}>
             <Form.Group className="mb-3" controlId="currentPassword">
-              <Form.Label>Password Saat Ini</Form.Label>
+              <Form.Label style={{ fontWeight: "600" }}>Password Saat Ini</Form.Label>
               <Form.Control
                 type="password"
                 value={passwords.currentPassword}
                 onChange={(e) => handlePasswordChange("currentPassword", e.target.value)}
                 required
+                style={{
+                  border: "none",
+                  borderBottom: "2px solid #0d6efd",
+                  borderRadius: 0,
+                  boxShadow: "none",
+                  fontSize: "1.1rem",
+                  paddingLeft: 0,
+                }}
               />
             </Form.Group>
             <Form.Group className="mb-3" controlId="newPassword">
-              <Form.Label>Password Baru</Form.Label>
+              <Form.Label style={{ fontWeight: "600" }}>Password Baru</Form.Label>
               <Form.Control
                 type="password"
                 value={passwords.newPassword}
                 onChange={(e) => handlePasswordChange("newPassword", e.target.value)}
                 required
                 minLength={6}
+                style={{
+                  border: "none",
+                  borderBottom: "2px solid #0d6efd",
+                  borderRadius: 0,
+                  boxShadow: "none",
+                  fontSize: "1.1rem",
+                  paddingLeft: 0,
+                }}
               />
             </Form.Group>
             <Form.Group className="mb-3" controlId="confirmNewPassword">
-              <Form.Label>Konfirmasi Password Baru</Form.Label>
+              <Form.Label style={{ fontWeight: "600" }}>Konfirmasi Password Baru</Form.Label>
               <Form.Control
                 type="password"
                 value={passwords.confirmNewPassword}
                 onChange={(e) => handlePasswordChange("confirmNewPassword", e.target.value)}
                 required
+                style={{
+                  border: "none",
+                  borderBottom: "2px solid #0d6efd",
+                  borderRadius: 0,
+                  boxShadow: "none",
+                  fontSize: "1.1rem",
+                  paddingLeft: 0,
+                }}
               />
             </Form.Group>
             <div className="text-end">
-              <Button variant="primary" type="submit">
+              <Button variant="primary" type="submit" style={{ fontWeight: "600" }}>
                 Simpan Password
               </Button>
             </div>

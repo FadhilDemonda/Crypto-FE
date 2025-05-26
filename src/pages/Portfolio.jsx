@@ -173,60 +173,90 @@ export default function Portfolio() {
 
       {/* Daftar Portfolio Detail */}
       <Row xs={1} md={2} lg={3} className="g-4">
-        {portfolio.map((p) => (
-          <Col key={p.id}>
-            <Card className="h-100 shadow-sm">
-              <Card.Body className="d-flex flex-column">
-                <div className="d-flex align-items-center mb-3">
-                  <img
-                    src={p.image_url}
-                    alt={p.coin_name}
-                    width={40}
-                    height={40}
-                    className="me-3"
-                  />
-                  <h5 className="mb-0">{p.coin_name}</h5>
-                </div>
-                <div className="mb-2">
-                  <strong>Total Coin:</strong>{" "}
-                  <Badge bg="primary">
-                    {p.total_coin !== undefined && !isNaN(p.total_coin)
-                      ? Number(p.total_coin).toFixed(8)
-                      : "-"}
-                  </Badge>
-                </div>
-                <div className="mb-2">
-                  <strong>Harga Sekarang:</strong>{" "}
-                  <Badge bg="success">
-                    {p.current_price !== undefined && !isNaN(p.current_price)
-                      ? `$${Number(p.current_price).toLocaleString()}`
-                      : "-"}
-                  </Badge>
-                </div>
-                <div className="mt-auto">
-                  <strong>Nilai Total:</strong>{" "}
-                  <Badge bg="info">
-                    {p.total_coin !== undefined && p.current_price !== undefined
-                      ? `$${(Number(p.total_coin) * Number(p.current_price)).toFixed(2)}`
-                      : "-"}
-                  </Badge>
-                </div>
-                <div className="mt-2">
-                <Button
-                    as={Link}
-                    to={`/coins/${p.coin_name}`}
-                    variant="danger"
-                    className="text-truncate"
-                    style={{ maxWidth: "100%" }}
-                  >
-                      Lihat Detail
-                  </Button>
-                      </div>
-              </Card.Body>
-            </Card>
-          </Col>
-        ))}
-      </Row>
+  {portfolio.map((p) => (
+    <Col key={p.id}>
+      <Card
+        className="h-100 shadow-sm"
+        style={{
+          borderRadius: "15px",
+          transition: "transform 0.2s ease, box-shadow 0.2s ease",
+          cursor: "pointer",
+          backgroundColor: "white",
+        }}
+        onMouseEnter={(e) => {
+          e.currentTarget.style.transform = "translateY(-5px)";
+          e.currentTarget.style.boxShadow = "0 8px 20px rgba(0,0,0,0.12)";
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.transform = "translateY(0)";
+          e.currentTarget.style.boxShadow = "0 2px 8px rgba(0,0,0,0.1)";
+        }}
+      >
+        <Card.Body className="d-flex flex-column">
+          <div className="d-flex align-items-center mb-4">
+            <img
+              src={p.image_url}
+              alt={p.coin_name}
+              width={56}
+              height={56}
+              className="rounded-circle shadow-sm"
+              style={{ objectFit: "cover" }}
+            />
+            <h5 className="mb-0 ms-3" style={{ color: "#222", fontWeight: "700" }}>
+              {p.coin_name}
+            </h5>
+          </div>
+
+          <div className="mb-3 d-flex justify-content-between align-items-center">
+            <div>
+              <div className="text-muted small mb-1">Total Coin</div>
+              <div style={{ fontWeight: "600", fontSize: "1.1rem" }}>
+                {p.total_coin !== undefined && !isNaN(p.total_coin)
+                  ? Number(p.total_coin).toFixed(8)
+                  : "-"}
+              </div>
+            </div>
+            <div>
+              <div className="text-muted small mb-1">Harga Sekarang</div>
+              <div style={{ fontWeight: "600", fontSize: "1.1rem", color: "#28a745" }}>
+                {p.current_price !== undefined && !isNaN(p.current_price)
+                  ? `$${Number(p.current_price).toLocaleString()}`
+                  : "-"}
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-auto">
+            <div className="text-muted small mb-1">Nilai Total</div>
+            <div
+              style={{
+                fontWeight: "700",
+                fontSize: "1.25rem",
+                color: "#17a2b8",
+                marginBottom: "1rem",
+              }}
+            >
+              {p.total_coin !== undefined && p.current_price !== undefined
+                ? `$${(Number(p.total_coin) * Number(p.current_price)).toFixed(2)}`
+                : "-"}
+            </div>
+
+            <Button
+              as={Link}
+              to={`/coins/${p.coin_name}`}
+              variant="primary"
+              className="w-100"
+              style={{ fontWeight: "600" }}
+            >
+              Lihat Detail
+            </Button>
+          </div>
+        </Card.Body>
+      </Card>
+    </Col>
+  ))}
+</Row>
+
     </Container>
   );
 }

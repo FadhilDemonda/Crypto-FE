@@ -13,6 +13,7 @@ import CoinHistory from './pages/CoinHistory';
 import TransactionHistory from "./pages/TransactionHistory";
 import TopUp from "./pages/TopUp";
 import About from "./pages/About";
+import CryptoChangeChart from './pages/CoinChart';
 
 
 import AppNavbar from './components/Navbar';
@@ -38,6 +39,8 @@ export default function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/about" element={<About />} />
         <Route path="/coins" element={<CoinList />} />
+        <Route path="/chart" element={<CryptoChangeChart />} />
+
 
         {/* <Route path="/profile" element={<Profile />} />
         <Route path="/balance" element={<Balance />} />

@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axiosInstance from "../api/axiosInstance";
 import NewsSection from "../components/NewsSection"; // sesuaikan path sesuai letak file kamu
+import CryptoChangeList from "../components/CryptoChangeList"; // sesuaikan path
+
 
 import {
   Container,
@@ -20,6 +22,9 @@ export default function Dashboard() {
   const [recentTx, setRecentTx] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+
+  const [period, setPeriod] = useState("24h");
+
 
   async function fetchData() {
     try {
@@ -57,22 +62,32 @@ export default function Dashboard() {
         <Alert variant="danger">{error}</Alert>
       </Container>
     );
-
-  return (
-    <Container className="mt-5">
-      <h2>Halo, {user?.username || "User"}!</h2>
-      <Row className="mt-4">
-        <Col md={4}>
-          {/* Total Asset Card */}
-          <Card className="text-center shadow-sm p-3">
-            <h5>Total Asset</h5>
-            <h1>${totalAsset.toLocaleString()}</h1>
-          </Card>
-        </Col>
-      </Row>
-
-      {/* Ini letakkan di luar Row supaya full width */}
-      <NewsSection />
-    </Container>
-  );
-}
+  
+    return (
+      <Container className="mt-5">
+        <h2>Halo, {user?.username || "User"}!</h2>
+        <Row className="mt-4">
+          <Col md={4}>
+            {/* Total Asset Card */}
+            <Card className="text-center shadow-sm p-3">
+              <h5>Total Asset</h5>
+              <h1>${totalAsset.toLocaleString()}</h1>
+            </Card>
+          </Col>
+  
+          <Col md={8}>
+            {/* Crypto Change List - batasi 3 coin */}
+            <Card className="shadow-sm p-3">
+              <h5>Top Crypto Price Change ({period})</h5>
+              {/* Kalau mau, bisa tambahkan tombol switch periode di sini juga */}
+              <CryptoChangeList period={period} limit={3} />
+            </Card>
+          </Col>
+        </Row>
+  
+        {/* News Section full width */}
+        <NewsSection />
+      </Container>
+    );
+  }
+  

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import CoinTable from "./CoinTable";
+import CoinTable from "../components/CoinTable";
 import { Container, Spinner, Alert } from "react-bootstrap";
 
 export default function CoinListPage() {

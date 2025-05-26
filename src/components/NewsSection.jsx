@@ -39,6 +39,14 @@ const dummyNews = [
   },
 ];
 
+// Mapping kategori ke warna badge yang keren
+const categoryColors = {
+  Market: "primary",
+  Tech: "success",
+  Regulation: "warning",
+  Education: "purple", // Bootstrap gak ada ungu default, nanti styling custom
+};
+
 export default function NewsSection() {
   const [showModal, setShowModal] = useState(false);
   const [selectedNews, setSelectedNews] = useState(null);
@@ -55,31 +63,74 @@ export default function NewsSection() {
 
   return (
     <>
-      <Card className="mt-4 shadow-sm">
-        <Card.Header>
-          <h5>Berita Crypto Terbaru</h5>
+      <Card className="mt-4 shadow-sm" style={{ borderRadius: "15px" }}>
+        <Card.Header
+          style={{
+            background: "linear-gradient(90deg, #4b6cb7 0%, #182848 100%)",
+            color: "white",
+            borderTopLeftRadius: "15px",
+            borderTopRightRadius: "15px",
+            fontWeight: "bold",
+            fontSize: "1.25rem",
+          }}
+        >
+          Berita Crypto Terbaru
         </Card.Header>
+
         <ListGroup variant="flush" className="p-2">
           {dummyNews.map((news) => (
             <ListGroup.Item
               key={news.id}
               action
               onClick={() => handleClick(news)}
-              className="d-flex flex-column"
-              style={{ cursor: "pointer" }}
+              className="d-flex justify-content-between align-items-center"
+              style={{
+                cursor: "pointer",
+                borderRadius: "10px",
+                marginBottom: "8px",
+                boxShadow: "0 1px 4px rgba(0,0,0,0.1)",
+                backgroundColor: "#f9faff",
+                transition: "background-color 0.2s",
+              }}
+              onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "#e6f0ff")}
+              onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "#f9faff")}
             >
-              <div
-                className="fw-semibold mb-1"
-                style={{ color: "#0d6efd" /* bootstrap primary color */ }}
+              <div style={{ flex: 1, paddingRight: "1rem" }}>
+                <div
+                  style={{
+                    fontWeight: "600",
+                    fontSize: "1rem",
+                    color: "#0d3b66",
+                  }}
+                >
+                  {news.title}
+                </div>
+                <small style={{ color: "#555" }}>
+                  {new Date(news.date).toLocaleDateString(undefined, {
+                    year: "numeric",
+                    month: "short",
+                    day: "numeric",
+                  })}
+                </small>
+              </div>
+
+              <Badge
+                bg={categoryColors[news.category] || "secondary"}
+                pill
+                style={{
+                  fontWeight: "600",
+                  fontSize: "0.75rem",
+                  textTransform: "uppercase",
+                  padding: "0.4em 0.8em",
+                  borderRadius: "20px",
+                  ...(news.category === "Education" && {
+                    backgroundColor: "#6f42c1", // custom ungu Bootstrap purple
+                    color: "white",
+                  }),
+                }}
               >
-                {news.title}
-              </div>
-              <div className="d-flex justify-content-between align-items-center text-muted small">
-                <span>{new Date(news.date).toLocaleDateString()}</span>
-                <Badge bg="info" pill>
-                  {news.category}
-                </Badge>
-              </div>
+                {news.category}
+              </Badge>
             </ListGroup.Item>
           ))}
         </ListGroup>
@@ -91,8 +142,7 @@ export default function NewsSection() {
         </Modal.Header>
         <Modal.Body>
           <p>
-            Ini cuma dummy bang, berita <strong>{selectedNews?.title}</strong>{" "}
-            belum ada detail lengkapnya.
+            Ini cuma dummy bang, berita <strong>{selectedNews?.title}</strong> belum ada detail lengkapnya.
           </p>
           <p>
             Tanggal: {selectedNews ? new Date(selectedNews.date).toLocaleDateString() : ""}

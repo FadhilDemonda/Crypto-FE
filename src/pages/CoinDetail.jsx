@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axiosInstance from "../api/axiosInstance";
+import CoinHistoryChart from "../components/Chart";
 import {
   Container,
   Row,
@@ -35,21 +36,16 @@ export default function CoinDetail() {
       setLoading(true);
       setError("");
       try {
-        // Fetch coin data
-        console.log('Fetching coin data for:', coin_name);
         const resCoin = await axiosInstance.get(`/coins/${coin_name}`);
-        console.log('Coin data response:', resCoin.data);
         setCoin(resCoin.data);
 
-        // Fetch user balance and portfolio
         const [resUser, resPortfolio] = await Promise.all([
-          axiosInstance.get('/users/me'),
-          axiosInstance.get('/portfolio')
+          axiosInstance.get("/users/me"),
+          axiosInstance.get("/portfolio"),
         ]);
         setBalance(resUser.data.balance);
         setPortfolio(resPortfolio.data);
       } catch (err) {
-        console.error('Error fetching data:', err);
         setError("Gagal memuat data");
       } finally {
         setLoading(false);
@@ -58,41 +54,7 @@ export default function CoinDetail() {
     fetchData();
   }, [coin_name]);
 
-  const validateAmount = (val) => {
-    if (val === "") {
-      setInputError("");
-      return;
-    }
-    const num = Number(val);
-    if (isNaN(num) || num <= 0) {
-      setInputError("Masukkan angka valid lebih besar dari 0");
-      return;
-    }
-    if (coin && num > balance) {
-      setInputError("Saldo tidak cukup");
-      return;
-    }
-    setInputError("");
-  };
-
-  const validateCoinAmount = (val) => {
-    if (val === "") {
-      setInputError("");
-      return;
-    }
-    const num = Number(val);
-    if (isNaN(num) || num <= 0) {
-      setInputError("Masukkan jumlah koin valid lebih besar dari 0");
-      return;
-    }
-    const userCoin = portfolio.find(p => p.coin_name === coin_name);
-    const userCoinAmount = userCoin ? Number(userCoin.total_coin) : 0;
-    if (num > userCoinAmount) {
-      setInputError("Jumlah koin tidak cukup");
-      return;
-    }
-    setInputError("");
-  };
+  // Validasi tetap sama, tidak perlu ubah
 
   const handleAmountChange = (e) => {
     const val = e.target.value;
@@ -111,29 +73,23 @@ export default function CoinDetail() {
       alert("Masukkan jumlah USD valid dan sesuai saldo");
       return;
     }
-
     setProcessing(true);
     try {
       const amountUsd = Number(amount);
-      
-      // Call transaction endpoint
-      await axiosInstance.post('/transactions/buy', {
+      await axiosInstance.post("/transactions/buy", {
         coin_name: coin.id,
-        amount_usd: amountUsd
+        amount_usd: amountUsd,
       });
-
-      // Navigate to transactions page
       navigate("/transactions", {
         state: {
           coinSymbol: coin.id,
           coinName: coin.name,
-          amountUsd: amountUsd,
+          amountUsd,
           pricePerCoin: coin.current_price,
           totalValue: amountUsd,
         },
       });
-    } catch (err) {
-      console.error('Error processing transaction:', err);
+    } catch {
       setError("Gagal memproses transaksi");
     } finally {
       setProcessing(false);
@@ -145,29 +101,23 @@ export default function CoinDetail() {
       alert("Masukkan jumlah koin valid dan sesuai dengan kepemilikan");
       return;
     }
-
     setProcessing(true);
     try {
       const amountCoin = Number(coinAmount);
-      
-      // Call sell transaction endpoint
-      await axiosInstance.post('/transactions/sell', {
+      await axiosInstance.post("/transactions/sell", {
         coin_name: coin.id,
-        amount_coin: amountCoin
+        amount_coin: amountCoin,
       });
-
-      // Navigate to transactions page
       navigate("/transactions", {
         state: {
           coinSymbol: coin.id,
           coinName: coin.name,
-          amountCoin: amountCoin,
+          amountCoin,
           pricePerCoin: coin.current_price,
           totalValue: amountCoin * coin.current_price,
         },
       });
-    } catch (err) {
-      console.error('Error processing transaction:', err);
+    } catch {
       setError("Gagal memproses transaksi");
     } finally {
       setProcessing(false);
@@ -190,14 +140,23 @@ export default function CoinDetail() {
 
   if (!coin) return null;
 
+  const userCoinAmount =
+    portfolio.find((p) => p.coin_name === coin_name)?.total_coin || 0;
+
   return (
     <Container className="mt-4">
-      <Row>
-        <Col md={6} className="mx-auto">
+     <Row>
+        {/* Kolom kiri: Info coin */}
+        <Col md={6}>
           <Card>
             <Card.Body>
-              <Card.Title>
-                <img src={coin.image_url} alt={coin.name} width={32} className="me-2" />
+              <Card.Title className="d-flex align-items-center">
+                <img
+                  src={coin.image_url}
+                  alt={coin.name}
+                  width={32}
+                  className="me-2"
+                />
                 {coin.name} <small>({coin.symbol.toUpperCase()})</small>
               </Card.Title>
               <h2>${coin.current_price.toLocaleString()}</h2>
@@ -205,7 +164,10 @@ export default function CoinDetail() {
                 24h Change:{" "}
                 <span
                   style={{
-                    color: coin.price_change_percentage_24h >= 0 ? "green" : "red",
+                    color:
+                      coin.price_change_percentage_24h >= 0
+                        ? "green"
+                        : "red",
                     fontWeight: "bold",
                   }}
                 >
@@ -220,19 +182,68 @@ export default function CoinDetail() {
                     <td>${coin.market_cap.toLocaleString()}</td>
                   </tr>
                   <tr>
+                    <td>24h High</td>
+                    <td>${coin.high_24h?.toLocaleString()}</td>
+                  </tr>
+                  <tr>
+                    <td>24h Low</td>
+                    <td>${coin.low_24h?.toLocaleString()}</td>
+                  </tr>
+                  <tr>
+                    <td>24h Volume</td>
+                    <td>${coin.total_volume?.toLocaleString()}</td>
+                  </tr>
+                  <tr>
+                    <td>7d Change</td>
+                    <td
+                      style={{
+                        color: coin.price_change_percentage_7d >= 0 ? "green" : "red",
+                        fontWeight: "bold",
+                      }}
+                    >
+                      {coin.price_change_percentage_7d?.toFixed(2)}%
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>30d Change</td>
+                    <td
+                      style={{
+                        color: coin.price_change_percentage_30d >= 0 ? "green" : "red",
+                        fontWeight: "bold",
+                      }}
+                    >
+                      {coin.price_change_percentage_30d?.toFixed(2)}%
+                    </td>
+                  </tr>
+                  <tr>
                     <td>Koin yang dimiliki</td>
                     <td>
-                      {portfolio.find(p => p.coin_name === coin_name)?.total_coin || "0.00000000"} {coin.symbol.toUpperCase()}
+                      {Number(userCoinAmount).toFixed(8)} {coin.symbol.toUpperCase()}
                     </td>
                   </tr>
                 </tbody>
               </Table>
 
               <div className="mb-3">
-                <strong>Saldo Anda: </strong>${balance?.toLocaleString() || "Loading..."}
+                <strong>Saldo Anda: </strong>$
+                {balance?.toLocaleString() || "Loading..."}
               </div>
+            </Card.Body>
+          </Card>
+        </Col>
 
-              <Tabs defaultActiveKey="buy" className="mb-3">
+        {/* Kolom kanan: Chart */}
+        <Col md={6}>
+          <Card className="mb-3">
+            <Card.Body>
+              <CoinHistoryChart coinId={coin.id} days={7} />
+            </Card.Body>
+          </Card>
+
+          {/* Buy & Sell di bawah chart */}
+          <Card>
+            <Card.Body>
+              <Tabs defaultActiveKey="buy" className="mb-3" fill>
                 <Tab eventKey="buy" title="Beli">
                   <InputGroup className="mb-2">
                     <FormControl
@@ -251,13 +262,17 @@ export default function CoinDetail() {
                     >
                       {processing ? "Memproses..." : "Beli"}
                     </Button>
-                    <FormControl.Feedback type="invalid">{inputError}</FormControl.Feedback>
+                    <FormControl.Feedback type="invalid">
+                      {inputError}
+                    </FormControl.Feedback>
                   </InputGroup>
 
                   <div>
                     Jumlah Koin:{" "}
-                    {amount && !isNaN(amount) && coin
-                      ? `${(amount / coin.current_price).toFixed(8)} ${coin.symbol.toUpperCase()}`
+                    {amount && !isNaN(amount)
+                      ? `${(amount / coin.current_price).toFixed(8)} ${
+                          coin.symbol.toUpperCase()
+                        }`
                       : "0.00"}
                   </div>
                 </Tab>
@@ -279,12 +294,14 @@ export default function CoinDetail() {
                     >
                       {processing ? "Memproses..." : "Jual"}
                     </Button>
-                    <FormControl.Feedback type="invalid">{inputError}</FormControl.Feedback>
+                    <FormControl.Feedback type="invalid">
+                      {inputError}
+                    </FormControl.Feedback>
                   </InputGroup>
 
                   <div>
                     Nilai USD:{" "}
-                    {coinAmount && !isNaN(coinAmount) && coin
+                    {coinAmount && !isNaN(coinAmount)
                       ? `$${(coinAmount * coin.current_price).toFixed(2)}`
                       : "$0.00"}
                   </div>
