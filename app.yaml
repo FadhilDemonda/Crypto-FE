@@ -3,15 +3,15 @@ service: crypto-fe
 instance_class: F1
 
 handlers:
-  - url: /static
-    static_dir: dist/static
+  - url: /assets
+    static_dir: dist/assets
 
   - url: /
     static_files: dist/index.html
     upload: dist/index.html
 
-  - url: /.*
-    static_files: dist/index.html
-    upload: dist/index.html
+  - url: /(.*)
+    static_files: dist/\1
+    upload: dist/(.*)
 
 default_expiration: "1h"
