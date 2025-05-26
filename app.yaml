@@ -1,0 +1,17 @@
+runtime: nodejs20
+service: crypto-fe
+instance_class: F1
+
+handlers:
+  - url: /static
+    static_dir: dist/static
+
+  - url: /
+    static_files: dist/index.html
+    upload: dist/index.html
+
+  - url: /.*
+    static_files: dist/index.html
+    upload: dist/index.html
+
+default_expiration: "1h"
