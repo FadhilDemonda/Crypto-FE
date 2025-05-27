@@ -73,9 +73,17 @@ export default function TransactionHistory() {
 
   if (transactions.length === 0)
     return (
+      <div
+      style={{
+        backgroundColor: "#333446",
+        minHeight: "100vh",
+        paddingTop: 30,
+        paddingBottom: 40,
+      }}>
       <Container className="mt-4">
         <Alert variant="info">Belum ada transaksi.</Alert>
-      </Container>
+        </Container>
+      </div>
     );
 
   return (
