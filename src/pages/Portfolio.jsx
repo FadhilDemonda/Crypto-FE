@@ -23,9 +23,18 @@ import {
 } from "recharts";
 
 const COLORS = [
-  "#E8C999", "#948979", "#DFD0B8", "#F2F2F2",
-  "#EAE4D5", "#B6B09F", "#33CC33", "#FF6666"
+  // krem hangat
+ "#123458", // krem hangat
+ "#D4C9BE", // coklat abu
+ "#F1EFEC", // beige lembut
+ "#205781", // abu sangat terang
+ "#4F959D", // krem keputihan
+ "#98D2C0", // coklat muda
+ "#F6F8D5", // hijau segar untuk highlight
+ "#D2D0A0", // merah lembut untuk kontras
 ];
+
+
 
 export default function Portfolio() {
   const [portfolio, setPortfolio] = useState([]);
@@ -87,9 +96,50 @@ export default function Portfolio() {
 
   if (portfolio.length === 0)
     return (
-      <Container className="mt-4">
-        <Alert variant="info">Belum ada portfolio</Alert>
+      <div
+      style={{
+        backgroundColor: "#333446",
+        minHeight: "100vh",
+        paddingTop: 30,
+        paddingBottom: 40,
+        color: "white",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
+      <Container className="text-center">
+        <Row className="justify-content-center">
+          <Col md={8}>
+            <Alert
+              variant="info"
+              className="py-4"
+              style={{
+                backgroundColor: "#44475a",
+                border: "none",
+                fontSize: "1.2rem",
+                color: "#EAEFEF",
+              }}
+            >
+              <h4>Kamu belum punya portfolio crypto saat ini.</h4>
+              <p>
+                Mulailah eksplorasi dan beli koin favoritmu untuk membangun portfolio.
+                Jangan lewatkan kesempatan investasi di dunia crypto!
+              </p>
+              <Button
+                as={Link}
+                to="/coins"
+                variant="primary"
+                size="lg"
+                style={{ fontWeight: "600", marginTop: "1rem" }}
+              >
+                Lihat Daftar Coin
+              </Button>
+            </Alert>
+          </Col>
+        </Row>
       </Container>
+    </div>
     );
 
   return (
@@ -110,7 +160,7 @@ export default function Portfolio() {
         {/* Total Asset & Daftar Coin */}
         <Col md={4}>
           <Card className="p-3 text-center shadow-sm"
-             style={{ backgroundColor: "#7F8CAA" , color: "#EAEFEF", borderRadius: "15px"}} // biru muda contoh
+             style={{ backgroundColor: "#EAE4D5" , color: "#393E46", borderRadius: "15px"}} // biru muda contoh
           >
             <h5>Coin Asset</h5>
             <h2>
@@ -153,7 +203,7 @@ export default function Portfolio() {
 
         {/* Pie Chart */}
         <Col md={8}>
-          <Card style={{backgroundColor: "#393E46", color: "#EAEFEF", borderRadius: "15px", height: "250px"}} className="shadow-sm p-3">
+          <Card style={{backgroundColor: "#393E46", color: "#EAEFEF", borderRadius: "15px", height: "310px"}} className="shadow-sm p-3">
             <ResponsiveContainer width="100%" height="100%">
               <PieChart>
                 <Pie

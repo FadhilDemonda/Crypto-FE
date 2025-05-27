@@ -35,11 +35,11 @@ export default function Register() {
     // Container untuk center secara vertikal dan horizontal
     <div
       style={{
-        minHeight: '90vh',
+        minHeight: '100vh',
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#f8f9fa', // opsional biar kontras dengan card
+        backgroundColor: '#333446', // opsional biar kontras dengan card
         padding: '1rem'
       }}
     >

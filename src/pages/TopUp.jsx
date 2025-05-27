@@ -45,6 +45,14 @@ export default function TopUp() {
   };
 
   return (
+    <div
+      style={{
+        backgroundColor: "#333446",
+        minHeight: "100vh",
+        paddingTop: 30,
+        paddingBottom: 40,
+      }}>
+
     <Container
       className="d-flex justify-content-center align-items-center"
       style={{ minHeight: "80vh" }}
@@ -93,6 +101,7 @@ export default function TopUp() {
           </Form>
         </Card.Body>
       </Card>
-    </Container>
+      </Container>
+    </div>
   );
 }

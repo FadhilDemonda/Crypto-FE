@@ -112,6 +112,13 @@ export default function Profile() {
   if (loading) return <div className="text-center mt-5">Loading...</div>;
 
   return (
+    <div
+      style={{
+        backgroundColor: "#f8f9fa",
+        minHeight: "100vh",
+        paddingTop: "30px",
+      }}
+        >
     <Container className="my-5 d-flex justify-content-center">
       <Card
         style={{ maxWidth: 520, width: "100%", borderRadius: "16px", boxShadow: "0 4px 20px rgba(0,0,0,0.1)" }}
@@ -324,6 +331,7 @@ export default function Profile() {
           </Form>
         </Modal.Body>
       </Modal>
-    </Container>
+      </Container>
+    </div>
   );
 }

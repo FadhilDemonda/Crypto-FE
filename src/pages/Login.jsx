@@ -23,6 +23,14 @@ export default function Login() {
   };
 
   return (
+    <div
+      style={{
+          backgroundColor: "#333446",
+          minHeight: "100vh",
+          paddingTop: 30,
+          paddingBottom: 40,
+      }}
+    >
     <Card className="mx-auto mt-5" style={{ maxWidth: 400 }}>
       <Card.Body>
         <h3 className="mb-4 text-center">Login</h3>
@@ -64,6 +72,7 @@ export default function Login() {
         </div>
         
       </Card.Body>
-    </Card>
+      </Card>
+    </div>
   );
 }
