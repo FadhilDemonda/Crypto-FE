@@ -24,14 +24,22 @@ import {
 
 const COLORS = [
   // krem hangat
- "#123458", // krem hangat
- "#D4C9BE", // coklat abu
- "#F1EFEC", // beige lembut
- "#205781", // abu sangat terang
- "#4F959D", // krem keputihan
- "#98D2C0", // coklat muda
- "#F6F8D5", // hijau segar untuk highlight
- "#D2D0A0", // merah lembut untuk kontras
+  // krem hangat
+ "#FF6B6B  ", // coklat abu
+ "#4ECDC4  ", // beige lembut
+ "#1A535C ", // krem keputihan
+ "#FF9F1C ", // coklat muda
+ "#6A4C93 ", // hijau segar untuk highlight
+ "#1982C4 ", // merah lembut untuk kontras
+ "#4ECDC4 ", // beige lembut
+ "#1A535C ", // krem keputihan
+ "#FF9F1C ", // coklat muda
+ "#6A4C93 ", // hijau segar untuk highlight
+ "#1982C4 ", // merah lembut untuk kontras
+ "#F72585  ", // coklat muda
+ "#720026  ", // hijau segar untuk highlight
+ "#3CAEA3  ", // merah lembut untuk kontras
+ "#A2D2FF   ", // merah lembut untuk kontras
 ];
 
 
@@ -89,9 +97,17 @@ export default function Portfolio() {
 
   if (error)
     return (
+      <div
+      style={{
+        minHeight: "100vh",
+        paddingTop: 30,
+      }}
+    >
+        
       <Container className="mt-4">
         <Alert variant="danger">{error}</Alert>
       </Container>
+    </div>
     );
 
   if (portfolio.length === 0)
@@ -203,7 +219,7 @@ export default function Portfolio() {
 
         {/* Pie Chart */}
         <Col md={8}>
-          <Card style={{backgroundColor: "#393E46", color: "#EAEFEF", borderRadius: "15px", height: "310px"}} className="shadow-sm p-3">
+          <Card style={{backgroundColor: "#EAE4D5", color: "#393E46", borderRadius: "15px", height: "310px"}} className="shadow-sm p-3">
             <ResponsiveContainer width="100%" height="100%">
               <PieChart>
                 <Pie
