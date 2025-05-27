@@ -66,11 +66,20 @@ export default function CoinHistoryChart({ coinId = "bitcoin", days = 7 }) {
       title: { display: true, text: `${coinId.toUpperCase()} Price Chart (${days} days)` }
     },
     scales: {
+      x: {
+        grid: {
+          display: false // Menghilangkan grid lines pada sumbu X
+        }
+      },
       y: {
+        grid: {
+          display: false // Menghilangkan grid lines pada sumbu Y
+        },
         beginAtZero: false
       }
     }
   };
+  
 
   return (
     <div style={{ maxWidth: 700, margin: "auto" }}>

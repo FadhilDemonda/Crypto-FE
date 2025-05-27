@@ -63,7 +63,7 @@ export default function NewsSection() {
 
   return (
     <>
-      <Card className="mt-4 shadow-sm" style={{ borderRadius: "15px" }}>
+      <Card className="mt-4 shadow-sm" style={{ borderRadius: "15px",backgroundColor: "#EAEFEF" }}>
         <Card.Header
           style={{
             background: "linear-gradient(90deg, #4b6cb7 0%, #182848 100%)",
@@ -89,7 +89,7 @@ export default function NewsSection() {
                 borderRadius: "10px",
                 marginBottom: "8px",
                 boxShadow: "0 1px 4px rgba(0,0,0,0.1)",
-                backgroundColor: "#f9faff",
+                backgroundColor: "#EAEFEF",
                 transition: "background-color 0.2s",
               }}
               onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "#e6f0ff")}

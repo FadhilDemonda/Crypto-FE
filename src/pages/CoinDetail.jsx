@@ -124,6 +124,34 @@ export default function CoinDetail() {
     }
   };
 
+  const validateAmount = (val) => {
+    if (!val || Number(val) <= 0) {
+      setInputError("Masukkan angka valid lebih besar dari 0");
+      return;
+    }
+    if (Number(val) > balance) {
+      setInputError("Saldo tidak cukup");
+      return;
+    }
+    setInputError("");
+  };
+  
+  const validateCoinAmount = (val) => {
+    if (!val || Number(val) <= 0) {
+      setInputError("Masukkan jumlah koin valid lebih besar dari 0");
+      return;
+    }
+    const userCoin = portfolio.find(p => p.coin_name === coin_name);
+    const userCoinAmount = userCoin ? Number(userCoin.total_coin) : 0;
+    if (Number(val) > userCoinAmount) {
+      setInputError("Jumlah koin tidak cukup");
+      return;
+    }
+    setInputError("");
+  };
+  
+
+
   if (loading)
     return (
       <Container className="text-center mt-5">
@@ -144,11 +172,21 @@ export default function CoinDetail() {
     portfolio.find((p) => p.coin_name === coin_name)?.total_coin || 0;
 
   return (
-    <Container className="mt-4">
+    <div
+    style={{
+        backgroundColor: "#333446",
+        minHeight: "100vh",
+        paddingTop: 30,
+        paddingBottom: 40,
+    }}
+  >
+    <Container className="mt-0">
      <Row>
         {/* Kolom kiri: Info coin */}
         <Col md={6}>
-          <Card>
+            <Card
+              className="mb-3"
+              style={{ borderRadius: "15px" }}>
             <Card.Body>
               <Card.Title className="d-flex align-items-center">
                 <img
@@ -234,7 +272,8 @@ export default function CoinDetail() {
 
         {/* Kolom kanan: Chart */}
         <Col md={6}>
-          <Card className="mb-3">
+            <Card className="mb-3"
+              style={{ borderRadius: "15px" }}>
             <Card.Body>
               <CoinHistoryChart coinId={coin.id} days={7} />
             </Card.Body>
@@ -244,73 +283,74 @@ export default function CoinDetail() {
           <Card>
             <Card.Body>
               <Tabs defaultActiveKey="buy" className="mb-3" fill>
-                <Tab eventKey="buy" title="Beli">
-                  <InputGroup className="mb-2">
-                    <FormControl
-                      type="number"
-                      step="0.01"
-                      placeholder="Jumlah USD"
-                      value={amount}
-                      onChange={handleAmountChange}
-                      min="0"
-                      isInvalid={!!inputError}
-                    />
-                    <Button
-                      variant="success"
-                      onClick={handleBuyClick}
-                      disabled={!amount || !!inputError || processing}
-                    >
-                      {processing ? "Memproses..." : "Beli"}
-                    </Button>
-                    <FormControl.Feedback type="invalid">
-                      {inputError}
-                    </FormControl.Feedback>
-                  </InputGroup>
+              <Tab eventKey="buy" title="Beli">
+  <InputGroup className="mb-2">
+    <FormControl
+      type="number"
+      step="0.01"
+      placeholder="Jumlah USD"
+      value={amount}
+      onChange={handleAmountChange}
+      min="0"
+      isInvalid={!!inputError}
+    />
+    <Button
+      variant="success"
+      onClick={handleBuyClick}
+      disabled={!amount || !!inputError || processing}
+    >
+      {processing ? "Memproses..." : "Beli"}
+    </Button>
+    <FormControl.Feedback type="invalid">
+      {inputError}
+    </FormControl.Feedback>
+  </InputGroup>
 
-                  <div>
-                    Jumlah Koin:{" "}
-                    {amount && !isNaN(amount)
-                      ? `${(amount / coin.current_price).toFixed(8)} ${
-                          coin.symbol.toUpperCase()
-                        }`
-                      : "0.00"}
-                  </div>
-                </Tab>
-                <Tab eventKey="sell" title="Jual">
-                  <InputGroup className="mb-2">
-                    <FormControl
-                      type="number"
-                      step="0.00000001"
-                      placeholder="Jumlah Koin"
-                      value={coinAmount}
-                      onChange={handleCoinAmountChange}
-                      min="0"
-                      isInvalid={!!inputError}
-                    />
-                    <Button
-                      variant="danger"
-                      onClick={handleSellClick}
-                      disabled={!coinAmount || !!inputError || processing}
-                    >
-                      {processing ? "Memproses..." : "Jual"}
-                    </Button>
-                    <FormControl.Feedback type="invalid">
-                      {inputError}
-                    </FormControl.Feedback>
-                  </InputGroup>
+  <div>
+    Jumlah Koin:{" "}
+    {amount && !isNaN(amount)
+      ? `${(amount / coin.current_price).toFixed(8)} ${coin.symbol.toUpperCase()}`
+      : "0.00"}
+  </div>
+</Tab>
 
-                  <div>
-                    Nilai USD:{" "}
-                    {coinAmount && !isNaN(coinAmount)
-                      ? `$${(coinAmount * coin.current_price).toFixed(2)}`
-                      : "$0.00"}
-                  </div>
-                </Tab>
+<Tab eventKey="sell" title="Jual">
+  <InputGroup className="mb-2">
+    <FormControl
+      type="number"
+      step="0.00000001"
+      placeholder="Jumlah Koin"
+      value={coinAmount}
+      onChange={handleCoinAmountChange}
+      min="0"
+      isInvalid={!!inputError}
+    />
+    <Button
+      variant="danger"
+      onClick={handleSellClick}
+      disabled={!coinAmount || !!inputError || processing}
+    >
+      {processing ? "Memproses..." : "Jual"}
+    </Button>
+    <FormControl.Feedback type="invalid">
+      {inputError}
+    </FormControl.Feedback>
+  </InputGroup>
+
+  <div>
+    Nilai USD:{" "}
+    {coinAmount && !isNaN(coinAmount)
+      ? `$${(coinAmount * coin.current_price).toFixed(2)}`
+      : "$0.00"}
+  </div>
+</Tab>
+
               </Tabs>
             </Card.Body>
           </Card>
         </Col>
       </Row>
-    </Container>
+      </Container>
+    </div>
   );
 }

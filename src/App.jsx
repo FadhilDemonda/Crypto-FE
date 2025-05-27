@@ -4,7 +4,6 @@ import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
 import PrivateRoute from './components/PrivateRoute'; 
 import Profile from './pages/Profile';
-import Balance from './pages/Balance';
 import Portfolio from './pages/Portfolio';
 import Transactions from './pages/Transactions';
 import CoinList from './pages/CoinList1';
@@ -17,6 +16,8 @@ import CryptoChangeChart from './pages/CoinChart';
 
 
 import AppNavbar from './components/Navbar';
+import Footer from "./components/Footer"; // Import Footer
+
 
 import useAuth from './auth/useAuth';  // import hook auth
 
@@ -115,8 +116,11 @@ export default function App() {
         <Dashboard />
       </PrivateRoute>
     }
-  />
+        />
+        
       </Routes>
+            {/* Footer */}
+            <Footer />
     </>
   );
 }

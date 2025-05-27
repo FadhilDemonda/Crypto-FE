@@ -55,9 +55,18 @@ export default function CoinListPage() {
     );
 
   return (
-    <Container className="mt-4">
+    <div
+    style={{
+        backgroundColor: "#EAEFEF",
+        minHeight: "100vh",
+        paddingTop: 30,
+        paddingBottom: 40,
+    }}
+  >
+    <Container className="mt-0">
       <h2>Top 10 Crypto Coins</h2>
       <CoinTable coins={coins} />
-    </Container>
+      </Container>
+    </div>
   );
 }

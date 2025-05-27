@@ -45,7 +45,7 @@ export default function Dashboard() {
 
   useEffect(() => {
     fetchData();
-    const interval = setInterval(fetchData, 150000); // refresh tiap 15 detik
+    const interval = setInterval(fetchData, 150000); // refresh tiap 150 detik
     return () => clearInterval(interval);
   }, []);
 
@@ -63,13 +63,25 @@ export default function Dashboard() {
       </Container>
     );
   
-    return (
-      <Container className="mt-5">
-        <h2>Halo, {user?.username || "User"}!</h2>
+  return (
+    <div
+    style={{
+        backgroundColor: "#333446",
+        minHeight: "100vh",
+        paddingTop: 30,
+        paddingBottom: 40,
+    }}
+  >
+      <Container className="mb-5">
+        <h2
+        style={{ color: "#EAEFEF" }}
+        >Halo, {user?.username || "User"}!</h2>
         <Row className="mt-4">
           <Col md={4}>
             {/* Total Asset Card */}
-            <Card className="text-center shadow-sm p-3">
+            <Card className="text-center shadow-sm p-3"
+              style={{ backgroundColor: "#7F8CAA", color: "#EAEFEF", borderRadius: "15px" }}
+            >
               <h5>Total Asset</h5>
               <h1>${totalAsset.toLocaleString()}</h1>
             </Card>
@@ -77,7 +89,8 @@ export default function Dashboard() {
   
           <Col md={8}>
             {/* Crypto Change List - batasi 3 coin */}
-            <Card className="shadow-sm p-3">
+            <Card className="shadow-sm p-3 mb-5"           
+              style={{borderRadius: "15px" }}>
               <h5>Top Crypto Price Change ({period})</h5>
               {/* Kalau mau, bisa tambahkan tombol switch periode di sini juga */}
               <CryptoChangeList period={period} limit={3} />
@@ -88,6 +101,7 @@ export default function Dashboard() {
         {/* News Section full width */}
         <NewsSection />
       </Container>
+      </div>
     );
   }
   

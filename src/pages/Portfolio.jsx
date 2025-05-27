@@ -23,8 +23,8 @@ import {
 } from "recharts";
 
 const COLORS = [
-  "#0088FE", "#00C49F", "#FFBB28", "#FF8042",
-  "#A28FFF", "#FF6699", "#33CC33", "#FF6666"
+  "#E8C999", "#948979", "#DFD0B8", "#F2F2F2",
+  "#EAE4D5", "#B6B09F", "#33CC33", "#FF6666"
 ];
 
 export default function Portfolio() {
@@ -93,14 +93,26 @@ export default function Portfolio() {
     );
 
   return (
-    <Container className="mt-4">
-      <h3 className="mb-4">Portfolio Saya</h3>
+    <div
+    style={{
+        backgroundColor: "#333446",
+        minHeight: "100vh",
+        paddingTop: 30,
+        paddingBottom: 40,
+    }}
+  >
+    <Container className="mt-0">
+        <h3 className="mb-4"
+          style={{ color: "#EAEFEF"}} // biru muda contoh
 
+        >Portfolio Saya</h3>
       <Row className="mb-4">
         {/* Total Asset & Daftar Coin */}
         <Col md={4}>
-          <Card className="p-3 text-center shadow-sm">
-            <h5>Total Asset</h5>
+          <Card className="p-3 text-center shadow-sm"
+             style={{ backgroundColor: "#7F8CAA" , color: "#EAEFEF", borderRadius: "15px"}} // biru muda contoh
+          >
+            <h5>Coin Asset</h5>
             <h2>
               ${totalAssetValue.toLocaleString(undefined, {
                 minimumFractionDigits: 2,
@@ -141,7 +153,7 @@ export default function Portfolio() {
 
         {/* Pie Chart */}
         <Col md={8}>
-          <Card style={{ height: 250 }} className="shadow-sm p-3">
+          <Card style={{backgroundColor: "#393E46", color: "#EAEFEF", borderRadius: "15px", height: "250px"}} className="shadow-sm p-3">
             <ResponsiveContainer width="100%" height="100%">
               <PieChart>
                 <Pie
@@ -181,7 +193,7 @@ export default function Portfolio() {
           borderRadius: "15px",
           transition: "transform 0.2s ease, box-shadow 0.2s ease",
           cursor: "pointer",
-          backgroundColor: "white",
+          backgroundColor: "#EAEFEF",
         }}
         onMouseEnter={(e) => {
           e.currentTarget.style.transform = "translateY(-5px)";
@@ -246,7 +258,7 @@ export default function Portfolio() {
               to={`/coins/${p.coin_name}`}
               variant="primary"
               className="w-100"
-              style={{ fontWeight: "600" }}
+              style={{ fontWeight: "600",backgroundColor: "#B8CFCE", borderColor: "#B8CFCE", color: "#333446" }}
             >
               Lihat Detail
             </Button>
@@ -257,6 +269,8 @@ export default function Portfolio() {
   ))}
 </Row>
 
-    </Container>
+      </Container>
+      </div>
+
   );
 }

@@ -79,6 +79,14 @@ export default function TransactionHistory() {
     );
 
   return (
+    <div
+    style={{
+        backgroundColor: "#EAEFEF",
+        minHeight: "100vh",
+        paddingTop: 30,
+        paddingBottom: 40,
+    }}
+  >
     <Container className="mt-4">
       <Card>
         <Card.Body>
@@ -156,6 +164,7 @@ export default function TransactionHistory() {
           </Table>
         </Card.Body>
       </Card>
-    </Container>
+      </Container>
+    </div>
   );
 }
