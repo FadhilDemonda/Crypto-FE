@@ -68,7 +68,7 @@ export default function About() {
           {/* Kanan: gambar dummy */}
           <Col md={6} className="text-center">
             <img
-              src="/Pictures/crypto.jpg"
+              src="https://storage.cloud.google.com/crypto_tcc_project/dashboard.jpg?authuser=1"
               alt="Crypto Portfolio Dashboard"
               style={{
                 maxWidth: "100%",
