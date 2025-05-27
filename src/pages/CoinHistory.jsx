@@ -14,6 +14,10 @@ export default function CoinHistory() {
       .finally(() => setLoading(false));
   }, [coin_name]);
 
+  useEffect(() => {
+    document.title = "Riwayat Harga Koin | Crypto App";
+  }, []);
+
   if (loading) return <div>Loading...</div>;
 
   return (

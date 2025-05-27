@@ -40,6 +40,10 @@ export default function CoinListPage() {
     return () => clearInterval(interval);
   }, []);
 
+  useEffect(() => {
+    document.title = "Daftar Koin | Crypto App";
+  }, []);
+
   if (loading)
     return (
       <Container className="text-center mt-5">

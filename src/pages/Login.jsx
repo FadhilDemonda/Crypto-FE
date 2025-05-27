@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Form, Button, Card, Alert } from "react-bootstrap";
 import { useNavigate, Link } from "react-router-dom";
 import useAuth from "../auth/useAuth";
@@ -21,6 +21,10 @@ export default function Login() {
       setError(err.response?.data?.error || "Login gagal");
     }
   };
+
+  useEffect(() => {
+    document.title = "Login | Crypto App";
+  }, []);
 
   return (
     <div

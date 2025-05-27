@@ -54,6 +54,10 @@ export default function CoinDetail() {
     fetchData();
   }, [coin_name]);
 
+  useEffect(() => {
+    document.title = "Detail Koin | Crypto App";
+  }, []);
+
   // Validasi tetap sama, tidak perlu ubah
 
   const handleAmountChange = (e) => {

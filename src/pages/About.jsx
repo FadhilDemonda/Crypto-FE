@@ -1,10 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Container, Row, Col, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import useAuth from "../auth/useAuth"; // Import hook untuk memeriksa login status
 
 export default function About() {
   const { user } = useAuth(); // Mengambil data user dari context
+
+  useEffect(() => {
+    document.title = "Tentang | Crypto App";
+  }, []);
 
   return (
     <div

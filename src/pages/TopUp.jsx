@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Container, Card, Form, Button, Alert, InputGroup } from "react-bootstrap";
 import useAuth from "../auth/useAuth";
 import axiosInstance from "../api/axiosInstance";
@@ -43,6 +43,10 @@ export default function TopUp() {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    document.title = "Top Up Saldo | Crypto App";
+  }, []);
 
   return (
     <div

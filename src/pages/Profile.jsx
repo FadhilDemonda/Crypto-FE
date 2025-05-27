@@ -43,6 +43,10 @@ export default function Profile() {
       .finally(() => setLoading(false));
   }, []);
 
+  useEffect(() => {
+    document.title = "Profil | Crypto App";
+  }, []);
+
   const handleChange = (field, value) => {
     setProfile({ ...profile, [field]: value });
   };

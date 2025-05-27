@@ -83,6 +83,7 @@ export default function Portfolio() {
 
   useEffect(() => {
     fetchPortfolio();
+    document.title = "Portofolio | Crypto App";
   }, []);
 
   if (loading)

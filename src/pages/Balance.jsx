@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axiosInstance from '../api/axiosInstance';
 
 export default function Balance() {
@@ -14,6 +14,10 @@ export default function Balance() {
       setMessage(err.response?.data?.error || 'Gagal update saldo');
     }
   };
+
+  useEffect(() => {
+    document.title = "Saldo | Crypto App";
+  }, []);
 
   return (
     <form onSubmit={handleSubmit}>

@@ -49,6 +49,10 @@ export default function Dashboard() {
     return () => clearInterval(interval);
   }, []);
 
+  useEffect(() => {
+    document.title = "Dashboard | Crypto App";
+  }, []);
+
   if (loading)
     return (
       <Container className="d-flex justify-content-center align-items-center" style={{ height: "80vh" }}>

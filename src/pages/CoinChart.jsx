@@ -33,6 +33,10 @@ export default function CryptoChangeList() {
     fetchCoins();
   }, []);
 
+  useEffect(() => {
+    document.title = "Grafik Koin | Crypto App";
+  }, []);
+
   const getChange = (coin) => {
     if (period === "24h") return coin.price_change_percentage_24h;
     if (period === "7d") return coin.price_change_percentage_7d_in_currency || coin.price_change_percentage_7d;

@@ -36,6 +36,10 @@ export default function TransactionHistory() {
     fetchTransactions();
   }, []);
 
+  useEffect(() => {
+    document.title = "Riwayat Transaksi | Crypto App";
+  }, []);
+
   // Ambil daftar coin unik dari transaksi untuk opsi filter
   const coinOptions = useMemo(() => {
     const coins = transactions.map(tx => tx.coin_name).filter(Boolean);

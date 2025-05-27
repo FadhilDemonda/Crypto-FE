@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Form, Button, Card, Alert, Stack } from 'react-bootstrap';
 import useAuth from '../auth/useAuth';
 import { useNavigate } from 'react-router-dom';
@@ -30,6 +30,10 @@ export default function Register() {
       setError(err.response?.data?.error || 'Registrasi gagal');
     }
   };
+
+  useEffect(() => {
+    document.title = "Daftar Akun | Crypto App";
+  }, []);
 
   return (
     // Container untuk center secara vertikal dan horizontal

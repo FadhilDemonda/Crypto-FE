@@ -55,6 +55,10 @@ export default function Transactions() {
     fetchBalance();
   }, [user, navigate]);
 
+  useEffect(() => {
+    document.title = "Transaksi | Crypto App";
+  }, []);
+
   if (authLoading || loading) {
     return (
       <Container
