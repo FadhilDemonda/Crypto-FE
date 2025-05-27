@@ -118,11 +118,14 @@ export default function TransactionHistory() {
 
             <Col md={8} sm={6}>
               <Form.Control
-                type="search"
-                placeholder="Cari coin atau tipe transaksi (buy/sell)..."
+                as="select"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-              />
+              >
+                <option value="">Semua Transaksi</option>
+                <option value="buy">Buy</option>
+                <option value="sell">Sell</option>
+              </Form.Control>
             </Col>
           </Row>
 
