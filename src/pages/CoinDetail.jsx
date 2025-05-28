@@ -54,10 +54,6 @@ export default function CoinDetail() {
     fetchData();
   }, [coin_name]);
 
-  useEffect(() => {
-    document.title = "Detail Koin | Crypto App";
-  }, []);
-
   // Validasi tetap sama, tidak perlu ubah
 
   const handleAmountChange = (e) => {
@@ -112,6 +108,13 @@ export default function CoinDetail() {
         coin_name: coin.id,
         amount_coin: amountCoin,
       });
+      const userCoin = portfolio.find(p => p.coin_name === coin_name);
+      const remainingCoin = userCoin ? Number(userCoin.total_coin) - amountCoin : 0;
+  
+      if (remainingCoin <= 0) {
+        // Hapus portfolio coin via API
+        await axiosInstance.delete(`/portfolio/${coin_name}`);
+      }
       navigate("/transactions", {
         state: {
           coinSymbol: coin.id,
@@ -121,6 +124,7 @@ export default function CoinDetail() {
           totalValue: amountCoin * coin.current_price,
         },
       });
+
     } catch {
       setError("Gagal memproses transaksi");
     } finally {
