@@ -42,85 +42,115 @@ export default function App() {
         <Route path="/coins" element={<CoinList />} />
         <Route path="/chart" element={<CryptoChangeChart />} />
 
+        {/* Protected Routes */}
+        <Route path="/profile" element={
+          <PrivateRoute>
+            <Profile />
+          </PrivateRoute>
+        } />
+        <Route path="/portfolio" element={
+          <PrivateRoute>
+            <Portfolio />
+          </PrivateRoute>
+        } />
+        <Route path="/transactions/buy" element={
+          <PrivateRoute>
+            <Transactions />
+          </PrivateRoute>
+        } />
+        <Route path="/transactions" element={
+          <PrivateRoute>
+            <TransactionHistory />
+          </PrivateRoute>
+        } />
+        <Route path="/topup" element={
+          <PrivateRoute>
+            <TopUp />
+          </PrivateRoute>
+        } />
+        <Route path="/dashboard" element={
+          <PrivateRoute>
+            <Dashboard />
+          </PrivateRoute>
+        } />
+        <Route path="/coin/:id" element={
+          <PrivateRoute>
+            <CoinDetail />
+          </PrivateRoute>
+        } />
+        <Route path="/coin/:id/history" element={
+          <PrivateRoute>
+            <CoinHistory />
+          </PrivateRoute>} />
 
-        {/* <Route path="/profile" element={<Profile />} />
-        <Route path="/balance" element={<Balance />} />
-        <Route path="/portfolio" element={<Portfolio />} />
-        <Route path="/transactions/buy" element={<Transactions />} />
-        <Route path="/transactions" element={<TransactionHistory />} />
-
-        <Route path="/coins/:coin_name" element={<CoinDetail />} />
-        <Route path="/coins/:coin_name/history" element={<CoinHistory />} /> */}
-
-  {/* Hanya gunakan versi PrivateRoute saja untuk routes ini */}
-  <Route
-    path="/portfolio"
-    element={
-      <PrivateRoute>
-        <Portfolio />
-      </PrivateRoute>
-    }
-  />
-<Route
-  path="/topup"
-  element={
-    <PrivateRoute>
-      <TopUp />
-    </PrivateRoute>
-  }
-/>
-  <Route
-    path="/transactions/buy"
-    element={
-      <PrivateRoute>
-        <Transactions />
-      </PrivateRoute>
-    }
-  />
-  <Route
-    path="/profile"
-    element={
-      <PrivateRoute>
-        <Profile />
-      </PrivateRoute>
-    }
-  />
-  <Route
-    path="/transactions"
-    element={
-      <PrivateRoute>
-        <TransactionHistory />
-      </PrivateRoute>
-    }
-  />
-  <Route
-    path="/coins/:coin_name"
-    element={
-      <PrivateRoute>
-        <CoinDetail />
-      </PrivateRoute>
-    }
-  />
-  <Route
-    path="/coins/:coin_name/history"
-    element={
-      <PrivateRoute>
-        <CoinHistory />
-      </PrivateRoute>
-    }
-  />
-  <Route
-    path="/dashboard"
-    element={
-      <PrivateRoute>
-        <Dashboard />
-      </PrivateRoute>
-    }
-        />
-        
-      </Routes>
-            {/* Footer */}
-            <Footer />
-    </>
-  );
+            <Route
+              path="/portfolio"
+              element={
+                <PrivateRoute>
+                  <Portfolio />
+                </PrivateRoute>
+              }
+            />
+          <Route
+            path="/topup"
+            element={
+              <PrivateRoute>
+                <TopUp />
+              </PrivateRoute>
+            }
+          />
+            <Route
+              path="/transactions/buy"
+              element={
+                <PrivateRoute>
+                  <Transactions />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/profile"
+              element={
+                <PrivateRoute>
+                  <Profile />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/transactions"
+              element={
+                <PrivateRoute>
+                  <TransactionHistory />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/coins/:coin_name"
+              element={
+                <PrivateRoute>
+                  <CoinDetail />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/coins/:coin_name/history"
+              element={
+                <PrivateRoute>
+                  <CoinHistory />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/dashboard"
+              element={
+                <PrivateRoute>
+                  <Dashboard />
+                </PrivateRoute>
+              }
+                  />
+                  
+                </Routes>
+                      {/* Footer */}
+                      <Footer />
+              </>
+            );
 }
